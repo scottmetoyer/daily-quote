@@ -1,0 +1,4 @@
+﻿This is the first quote that I want to serve up - Scott Metoyer
+This is another quote - John Doe 
+This is the third quote - Jane Doe
+This is the last quote - Jim Doe
