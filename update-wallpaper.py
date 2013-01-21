@@ -3,14 +3,19 @@
 import ctypes
 import os
 import textwrap
+import json
+import urllib2
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 
 FONT = "tahoma.ttf"
 BOLD_FONT = "arialbd.ttf"
-
 SPI_SETDESKWALLPAPER = 20 # According to http://support.microsoft.com/default.aspx?scid=97142
 
-def add_quote(in_file, text, author, out_file, opacity=0.25):
+def get_quote(url):
+    quote = json.load(urllib2.urlopen(url))
+    return quote
+
+def render_wallpaper(in_file, text, author, out_file, opacity=0.25):
     img = Image.open(in_file).convert("RGB")
     quote_image = Image.new('RGBA', img.size, (0,0,0,0))
     size = 2
@@ -61,11 +66,9 @@ def add_quote(in_file, text, author, out_file, opacity=0.25):
     Image.composite(author_image, composite, author_image).filter(ImageFilter.SMOOTH_MORE).save(out_file, "JPEG")
 
 rendered_wallpaper = os.getcwd() + "/rendered.jpg"
-add_quote("wallpaper.jpg", "This a test quote of the day.", "Scott Metoyer", rendered_wallpaper)
+quote = get_quote("http://127.0.0.1:1337")
+render_wallpaper("wallpaper.jpg", quote["text"], quote["author"], rendered_wallpaper)
 errorCode = ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, rendered_wallpaper, 0) 
 
 if errorCode == 0:
-	print(ctypes.GetLastError())
-else:
-	print("Wallpaper set.")
-    
+	print(ctypes.GetLastError())    
