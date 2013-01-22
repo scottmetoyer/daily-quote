@@ -30,13 +30,13 @@ def render_wallpaper(in_file, text, author, out_file, opacity=0.25):
        n_font = ImageFont.truetype(FONT, size)
        quote_width, quote_height = n_font.getsize(lines[0])
     
-    # Draw the quote
+    # Draw the quote text
     draw = ImageDraw.Draw(quote_image, "RGBA")
     y_text = (quote_image.size[1] - (quote_height * len(lines))) / 2
     
     for line in lines:
         width, height = n_font.getsize(line)
-        draw.text((0, y_text), line, font = n_font)
+        draw.text((40, y_text), line, font = n_font)
         y_text += height
     
     # Draw the author
@@ -67,7 +67,7 @@ def render_wallpaper(in_file, text, author, out_file, opacity=0.25):
 
 rendered_wallpaper = os.getcwd() + "/rendered.jpg"
 quote = get_quote("http://127.0.0.1:1337")
-render_wallpaper("wallpaper.jpg", quote["text"], quote["author"], rendered_wallpaper)
+render_wallpaper("wallpaper.jpg", quote["text"], quote["author"], rendered_wallpaper, .30)
 errorCode = ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, rendered_wallpaper, 0) 
 
 if errorCode == 0:

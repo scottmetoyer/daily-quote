@@ -17,4 +17,6 @@ Run the wallpaper script by running
 
     update-wallpaper.py
     
+The background wallpaper is wallpaper.jpg. Feel free to replace this with whatever you like (but make sure it's named wallpaper.jpg).
+
 You need node.js, python 2.7, and PIL 1.1.7. Everything was written and tested only on Windows.
